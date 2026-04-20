@@ -83,6 +83,9 @@ def clean_data(raw: pd.DataFrame) -> pd.DataFrame:
     df["Kanál"] = df["Kanál"].apply(normalize_str)
     df["Země"] = df["Země"].apply(normalize_str)
 
+    # Sjednotit varianty "50 %" vs "50%" → vždy "50 %"
+    df["Kanál"] = df["Kanál"].str.replace(r"(\d)%", r"\1 %", regex=True)
+
     df = df[
         df["Kanál"].notna()
         & (~df["Kanál"].isin(SKIP_KANALY))
