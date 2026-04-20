@@ -73,8 +73,8 @@ def clean_data(raw: pd.DataFrame) -> pd.DataFrame:
     available = [c for c in keep if c in raw.columns]
     df = raw[available].copy()
 
-    df["Kanál"] = df["Kanál"].str.strip()
-    df["Země"] = df["Země"].str.strip()
+    df["Kanál"] = df["Kanál"].str.strip().str.replace(r"\s+", " ", regex=True)
+    df["Země"] = df["Země"].str.strip().str.replace(r"\s+", " ", regex=True)
 
     df = df[
         df["Kanál"].notna()
