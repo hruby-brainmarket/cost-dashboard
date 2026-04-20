@@ -73,8 +73,15 @@ def clean_data(raw: pd.DataFrame) -> pd.DataFrame:
     available = [c for c in keep if c in raw.columns]
     df = raw[available].copy()
 
-    df["Kanál"] = df["Kanál"].str.strip().str.replace(r"\s+", " ", regex=True)
-    df["Země"] = df["Země"].str.strip().str.replace(r"\s+", " ", regex=True)
+    import unicodedata
+    def normalize_str(s):
+        if not isinstance(s, str):
+            return s
+        s = unicodedata.normalize("NFC", s)
+        s = s.replace("\xa0", " ").replace("\u200b", "")
+        return " ".join(s.split())
+    df["Kanál"] = df["Kanál"].apply(normalize_str)
+    df["Země"] = df["Země"].apply(normalize_str)
 
     df = df[
         df["Kanál"].notna()
