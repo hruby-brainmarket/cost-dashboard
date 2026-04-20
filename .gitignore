@@ -1,0 +1,6 @@
+.streamlit/secrets.toml
+*.json
+*.csv
+*.png
+*.jpg
+.DS_Store
