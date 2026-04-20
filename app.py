@@ -299,6 +299,13 @@ if comparable_months:
     st.plotly_chart(fig_diff, use_container_width=True)
     st.caption("Červená = náklady vzrostly, zelená = náklady klesly")
 
+    with st.expander("🔍 Debug: názvy kanálů"):
+        k25 = set(fdf[fdf["Rok"] == 2025]["Kanál"].unique())
+        k26 = set(fdf[fdf["Rok"] == 2026]["Kanál"].unique())
+        st.write("**Pouze v 2025:**", sorted(k25 - k26))
+        st.write("**Pouze v 2026:**", sorted(k26 - k25))
+        st.write("**V obou:**", sorted(k25 & k26))
+
 st.divider()
 
 # ── Náklady po měsících ───────────────────────────────────────────────────────
